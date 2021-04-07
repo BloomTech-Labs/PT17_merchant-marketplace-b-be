@@ -4,8 +4,18 @@ const Model = require('../globalModel');
 const endpointCreator = require('../endPoints');
 const helper = require('../helper');
 const router = express.Router();
+
+//[x] fetch all items 
+
+router.get('/', authRequired,
+ async (req, res) => {
+  endpointCreator.findAllData('item', req, res);
+});
+
+
 // GET items by profile ID
-router.get('/profile/:profileID/', authRequired, async (req, res) => {
+router.get('/profile/:profileID/', authRequired,
+ async (req, res) => {
   const profileID = String(req.params.profileID);
   const response = await Model.findItemByProfile(profileID);
   try {
@@ -19,7 +29,8 @@ router.get('/profile/:profileID/', authRequired, async (req, res) => {
   }
 });
 // get item by id
-router.get('/:itemID', authRequired, async (req, res) => {
+router.get('/:itemID', authRequired, 
+async (req, res) => {
   const { itemID } = req.params;
   const response = await Model.findAllProducts('item', itemID);
   try {
@@ -33,12 +44,15 @@ router.get('/:itemID', authRequired, async (req, res) => {
   }
 });
 
+
 // POST profile can create an item
-router.post('/', authRequired, async (req, res) => {
+router.post('/', authRequired,
+ async (req, res) => {
   endpointCreator.createData('item', req, res);
 });
 // PUT profile can edit an item
-router.put('/:productId', authRequired, async (req, res) => {
+router.put('/:productId', authRequired,
+ async (req, res) => {
   const data = req.body;
   const { productId } = req.params;
   const response = await Model.update('item', productId, data);
@@ -53,11 +67,13 @@ router.put('/:productId', authRequired, async (req, res) => {
   }
 });
 // DELETE profile can delete an item
-router.delete('/:productId/', authRequired, async (req, res) => {
+router.delete('/:productId/',  authRequired,
+  async (req, res) => {
   endpointCreator.deleteData('item', req, res);
 });
 //POST items and tags are connected
-router.post('/:itemID/tag/:tagID', authRequired, async (req, res) => {
+router.post('/:itemID/tag/:tagID',  authRequired,
+ async (req, res) => {
   const { itemID, tagID } = req.params;
   const response = await Model.connectItemsAndTags(itemID, tagID);
   try {
