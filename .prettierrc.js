@@ -4,7 +4,7 @@ module.exports = {
   semi: true,
   singleQuote: true,
   // Set the default
-  'editor.formatOnSave': false,
+  'editor.formatOnSave': true,
   // Enable per-language
   '[javascript]': {
     'editor.formatOnSave': true,

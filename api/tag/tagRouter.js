@@ -3,15 +3,14 @@ const authRequired = require('../middleware/authRequired');
 const Model = require('../globalModel');
 const endpointCreator = require('../endPoints');
 const router = express.Router();
+
 // GET all tags
-router.get('/', authRequired,
- async (req, res) => {
+router.get('/', authRequired, async (req, res) => {
   endpointCreator.findAllData('tag', req, res);
 });
 
 // GET all tags of item id with the item info
-router.get('/item/:itemID/', authRequired,
- async (req, res) => {
+router.get('/item/:itemID/', authRequired, async (req, res) => {
   const { itemID } = req.params;
   const response = await Model.getTagByItemId(itemID);
   if (response) {
@@ -22,8 +21,7 @@ router.get('/item/:itemID/', authRequired,
 });
 
 // POST tag
-router.post('/', authRequired,
- async (req, res) => {
+router.post('/', authRequired, async (req, res) => {
   endpointCreator.createData('tag', req, res);
 });
 

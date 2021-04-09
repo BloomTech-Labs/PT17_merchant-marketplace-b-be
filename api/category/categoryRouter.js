@@ -5,8 +5,7 @@ const endpointCreator = require('../endPoints');
 const router = express.Router();
 
 // GET all categories
-router.get('/', authRequired,
- async (req, res) => {
+router.get('/', authRequired, async (req, res) => {
   endpointCreator.findAllData('category', req, res);
 });
 

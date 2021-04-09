@@ -5,17 +5,28 @@ const endpointCreator = require('../endPoints');
 const helper = require('../helper');
 const router = express.Router();
 
-//[x] fetch all items 
-
-router.get('/', authRequired,
- async (req, res) => {
+// GET all published items
+router.get('/', async (req, res) => {
   endpointCreator.findAllData('item', req, res);
 });
 
+// GET items in drafts/unpublished via seller id
+router.get('/drafts/:profileID/', authRequired, async (req, res) => {
+  const profileID = String(req.params.profileID);
+  const response = await Model.findDrafts(profileID);
+  try {
+    if (response) {
+      res.status(200).json(response);
+    } else {
+      helper.notFound('items');
+    }
+  } catch {
+    helper.notFound(res);
+  }
+});
 
 // GET items by profile ID
-router.get('/profile/:profileID/', authRequired,
- async (req, res) => {
+router.get('/profile/:profileID/', authRequired, async (req, res) => {
   const profileID = String(req.params.profileID);
   const response = await Model.findItemByProfile(profileID);
   try {
@@ -28,9 +39,9 @@ router.get('/profile/:profileID/', authRequired,
     helper.notFound(res);
   }
 });
-// get item by id
-router.get('/:itemID', authRequired, 
-async (req, res) => {
+
+// GET item by id
+router.get('/:itemID', authRequired, async (req, res) => {
   const { itemID } = req.params;
   const response = await Model.findAllProducts('item', itemID);
   try {
@@ -44,15 +55,13 @@ async (req, res) => {
   }
 });
 
-
 // POST profile can create an item
-router.post('/', authRequired,
- async (req, res) => {
+router.post('/', authRequired, async (req, res) => {
   endpointCreator.createData('item', req, res);
 });
+
 // PUT profile can edit an item
-router.put('/:productId', authRequired,
- async (req, res) => {
+router.put('/:productId', authRequired, async (req, res) => {
   const data = req.body;
   const { productId } = req.params;
   const response = await Model.update('item', productId, data);
@@ -66,14 +75,14 @@ router.put('/:productId', authRequired,
     helper.dbError(res);
   }
 });
+
 // DELETE profile can delete an item
-router.delete('/:productId/',  authRequired,
-  async (req, res) => {
+router.delete('/:productId/', authRequired, async (req, res) => {
   endpointCreator.deleteData('item', req, res);
 });
+
 //POST items and tags are connected
-router.post('/:itemID/tag/:tagID',  authRequired,
- async (req, res) => {
+router.post('/:itemID/tag/:tagID', authRequired, async (req, res) => {
   const { itemID, tagID } = req.params;
   const response = await Model.connectItemsAndTags(itemID, tagID);
   try {
