@@ -3,6 +3,7 @@ const authRequired = require('../middleware/authRequired');
 const Model = require('../globalModel');
 const endpointCreator = require('../endPoints');
 const router = express.Router();
+
 // GET all tags
 router.get('/', authRequired, async (req, res) => {
   endpointCreator.findAllData('tag', req, res);

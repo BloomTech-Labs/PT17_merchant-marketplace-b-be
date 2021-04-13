@@ -1,7 +1,11 @@
 const db = require('../data/db-config');
 
+const findDrafts = async (seller_profile_id) => {
+  return await db('item').where({ seller_profile_id }).andWhere('published', 0);
+};
+
 const findAll = async (text) => {
-  return await db(text);
+  return await db(text).where('published', 1);
 };
 
 const findItemByProfile = async (seller_profile_id) => {
@@ -82,6 +86,7 @@ const connectItemsAndCategories = async (itemID, catID) => {
 };
 
 module.exports = {
+  findDrafts,
   findAll,
   findBy,
   findById,
