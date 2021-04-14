@@ -11,19 +11,23 @@ router.get('/', async (req, res) => {
 });
 
 // GET items in drafts/unpublished via seller id
-router.get('/drafts/:profileID/', authRequired, async (req, res) => {
-  const profileID = String(req.params.profileID);
-  const response = await Model.findDrafts(profileID);
-  try {
-    if (response) {
-      res.status(200).json(response);
-    } else {
-      helper.notFound('items');
+router.get(
+  '/drafts/:profileID/',
+  // authRequired,
+  async (req, res) => {
+    const profileID = String(req.params.profileID);
+    const response = await Model.findDrafts(profileID);
+    try {
+      if (response) {
+        res.status(200).json(response);
+      } else {
+        helper.notFound('items');
+      }
+    } catch {
+      helper.notFound(res);
     }
-  } catch {
-    helper.notFound(res);
   }
-});
+);
 
 // GET items by profile ID
 router.get('/profile/:profileID/', authRequired, async (req, res) => {

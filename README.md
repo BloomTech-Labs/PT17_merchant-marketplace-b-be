@@ -59,7 +59,7 @@ POSTING ITEMS
 | GET /item/profile/:profileId/
 | GET /item/:itemId/ | returns body
 | GET /item/ | returns all published items
-| GET /item /drafts/:profileID/ fetches draft items via seller id
+| GET /item /drafts/:profileID/ | fetches draft items via seller id
 | POST /item/ | don’t forget to post seller_profile_id
 | PUT /item/:id | returns body
 | DELETE /item/:id/ | returns id
