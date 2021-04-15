@@ -1,5 +1,7 @@
 # merchant-marketplace
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/e7750eaaf883ad954ec7/maintainability)](https://codeclimate.com/repos/60770d9a7dc4446d9f00c5c8/maintainability)
+
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your first Pull-Request is merged. This is intended to be a guideline. Feel free to add your own flare to it.
 
 # Project
